@@ -1,0 +1,16 @@
+@server= http://tickettric.dev
+
+### sign up
+POST {{server}}/api/users/signup
+Content-Type: application/json
+
+{
+    "email": "kgtwf@yahoo.com",
+    "password": "j2hdb#eiur"
+}
+
+### sign up
+GET {{server}}/api/users/currentUser/cfgbhhgc
+
+##### homepage
+GET {{server}}

@@ -1,0 +1,8 @@
+auth/node_modules
+auth/.env
+client/node_modules
+client/.env
+common/node_modules
+common/.env
+tickets/node_modules
+tickets/.env

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tickets-mysql-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tickets-mysql
+  template:
+    metadata:
+      labels:
+        app: tickets-mysql
+    spec:
+      containers:
+        - name: tickets-mysql
+          image: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-root-password-secret
+                  key: MYSQL_ROOT_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tickets-mysql-srv
+spec:
+  selector:
+    app: tickets-mysql
+  ports:
+    - name: my-sql
+      protocol: TCP
+      port: 3306
+      targetPort: 3306
