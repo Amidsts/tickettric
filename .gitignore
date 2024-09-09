@@ -4,6 +4,7 @@ client/node_modules
 client/.env
 common/node_modules
 common/.env
+/common/.git
 common/.gitignore
 tickets/node_modules
 tickets/.env
