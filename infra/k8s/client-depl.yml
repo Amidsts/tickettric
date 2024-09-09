@@ -13,7 +13,7 @@ spec:
         app: client
     spec:
       containers:
-        - name: client
+        - name: client_c
           image: jewelcodes/client
           env:
             - name: JWT_KEY

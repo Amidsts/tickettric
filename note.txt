@@ -1,0 +1,9 @@
+- fter updating an image used by deployment
+ 1. docker build -t <repository-name:image-name> .
+ 2. docker push <repository-name:image-name>
+ 3. kubectl rollout restart deployment <deployment-name>
+
+- when you create a new config file, run
+ kubectl apply -f <config file name>
+
+-To run skaffold, use "skaffold dev"

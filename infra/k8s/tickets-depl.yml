@@ -13,7 +13,7 @@ spec:
         app: tickets
     spec:
       containers:
-        - name: tickets
+        - name: tickets_c
           image: jewelcodes/tickets
           env:
             - name: JWT_KEY

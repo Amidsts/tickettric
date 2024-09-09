@@ -4,5 +4,9 @@ client/node_modules
 client/.env
 common/node_modules
 common/.env
+common/.gitignore
 tickets/node_modules
 tickets/.env
+
+infra/k8s/auth-secret.yaml
+infra/k8s/ticket-secret.yml

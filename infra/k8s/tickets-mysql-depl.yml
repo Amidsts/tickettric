@@ -13,7 +13,7 @@ spec:
         app: tickets-mysql
     spec:
       containers:
-        - name: tickets-mysql
+        - name: tickets-mysql-c
           image: mysql
           env:
             - name: MYSQL_ROOT_PASSWORD
