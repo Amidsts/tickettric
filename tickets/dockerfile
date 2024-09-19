@@ -10,6 +10,4 @@ RUN npm install
 
 COPY . .
 
-RUN npm run db:migrate
-
-CMD ["npm", "run", "docker:dev"]
+CMD ["sh", "-c", "npm run db:migrate && npm run docker:dev"]

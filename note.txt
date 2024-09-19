@@ -7,3 +7,17 @@
  kubectl apply -f <config file name>
 
 -To run skaffold, use "skaffold dev"
+
+-in create secret file, use this to encode each secret value to base-64
+*echo -n '<secret-value>' | base64* 
+
+- on the other hand, to decode base64 encoded value, use
+echo "<base64-code>" | base64 --decode
+
+-To create a secret in kubernetes using kubectl
+    kubectl create secret generic <secret-name> --from-literal=username=myuser
+To delete a secret
+kubectl delete secret <secret-name>
+
+- To execute a command in a pod 
+kubectl exec -it <pod-name> -- <any command (e.g: pwd, ls, bash)>

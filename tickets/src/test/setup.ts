@@ -1,30 +1,22 @@
-// import { MongoMemoryServer } from "mongodb-memory-server";
-// import mongoose, { ConnectOptions } from "mongoose";
-// import request from "supertest";
+import { PrismaClient } from "@prisma/client";
 
-// import app from "../app";
+const prisma = new PrismaClient();
 
-// let mongo: any;
-// beforeAll(async () => {
-//   process.env.JWT_KEY = "asdfasdf";
+beforeAll(async () => {
+  if (process.env.NODE_ENV === "test") {
+    console.log("TESTING............");
+    console.log("dbb:   ", process.env.DATABASE_URL);
+  }
+  process.env.JWT_KEY = "asdfasdf";
+  //connect to db
+});
 
-//   mongo = await MongoMemoryServer.create();
-//   const mongoUri = mongo.getUri();
-
-//   await mongoose.connect(mongoUri);
-// });
-
-// beforeEach(async () => {
-//   const collections = await mongoose.connection.db.collections();
-
-//   for (let collection of collections) {
-//     await collection.deleteMany();
-//   }
-// });
+beforeEach(async () => {
+  await prisma.ticket.deleteMany();
+});
 
 // afterAll(async () => {
-//   await mongo.stop();
-//   await mongoose.connection.close();
+//   await prisma.$disconnect()
 // });
 
 // (global as any).signup = async () => {

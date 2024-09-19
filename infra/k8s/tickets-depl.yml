@@ -13,14 +13,20 @@ spec:
         app: tickets
     spec:
       containers:
-        - name: tickets_c
+        - name: tickets-c
           image: jewelcodes/tickets
           env:
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
-                  name: jwt-secret
+                  name: jwt-key
                   key: JWT_KEY
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ticket-db
+                  key: DATABASE_URL
+
 ---
 apiVersion: v1
 kind: Service

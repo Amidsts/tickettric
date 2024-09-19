@@ -6,8 +6,11 @@ common/node_modules
 common/.env
 /common/.git
 common/.gitignore
+common
 tickets/node_modules
 tickets/.env
+tickets/.env.test
 
 infra/k8s/auth-secret.yaml
 infra/k8s/ticket-secret.yml
+infra/k8s/client-secret.yml

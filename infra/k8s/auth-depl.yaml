@@ -13,14 +13,24 @@ spec:
         app: auth
     spec:
       containers:
-        - name: auth_c
+        - name: auth-c
           image: jewelcodes/auth
           env:
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
-                  name: jwt-secret
+                  name: jwt-key
                   key: JWT_KEY
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: auth-db
+                  key: DATABASE_URL
+            - name: PORT
+              valueFrom:
+                secretKeyRef:
+                  name: auth-port
+                  key: PORT
 ---
 apiVersion: v1
 kind: Service

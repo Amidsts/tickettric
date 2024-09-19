@@ -7,15 +7,19 @@
     "build": "tsc",
     "dev": "npm run build && ts-node-dev src/index.ts",
     "start": "node dist/index.js",
-    "test": "jest --watchAll --no-cache",
-    "docker:dev": "nodemon --watch src -L --exec ts-node srcindex.ts",
-    "db:migrate": "prisma migrate dev --name init"
+    "test": "cross-env NODE_ENV=test DATABASE_URL=mysql://root:root@localhost:3306/ticket-test-db jest --watchAll --no-cache",
+    "docker:dev": "nodemon --watch src -L --exec ts-node src/index.ts",
+    "db:migrate": "prisma migrate dev --name init",
+    "db:detect": "prisma generate && npm run db:migrate"
   },
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
     "setupFilesAfterEnv": [
       "./src/test/setup.ts"
+    ],
+    "setupFiles": [
+      "dotenv/config"
     ]
   },
   "keywords": [],
@@ -27,6 +31,7 @@
     "axios": "^1.7.2",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-validator": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
@@ -40,6 +45,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.14.13",
     "@types/supertest": "^6.0.2",
+    "cross-env": "^7.0.3",
     "jest": "^29.7.0",
     "mongodb-memory-server": "^10.0.0",
     "nodemon": "^3.1.4",
