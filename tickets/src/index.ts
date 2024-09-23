@@ -13,7 +13,6 @@ const start = async () => {
     .$connect()
     .then(() => {
       console.log("connected to mysql database");
-      console.log(process.env.DATABASE_URL);
       app.listen(2000, () => {
         console.log("server is listening on 2000!");
       });

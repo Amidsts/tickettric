@@ -20,6 +20,6 @@ POST {{server}}/api/tickets
 Content-Type: application/json
 
 {
-    "title": "ballu",
+    "title": "balalu",
     "price": "20"
 }

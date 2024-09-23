@@ -21,3 +21,7 @@ kubectl delete secret <secret-name>
 
 - To execute a command in a pod 
 kubectl exec -it <pod-name> -- <any command (e.g: pwd, ls, bash)>
+
+
+====
+'session=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJalkyWldabU1XSmlOR1JpTUdOaE9UQTBOVEkzTmpkbFl5SXNJbVZ0WVdsc0lqb2lkR1Z6ZEVCMFpYTjBMbU52YlNJc0ltbGhkQ0k2TVRjeU56QXdNVEF4T1gwLldYanlmOHFLdElEUU9XWFZ2b3p3WDBtWG9jODhkUl9ySEJGZVE5UGwtVncifQ==; path=/; httponly'

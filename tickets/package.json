@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "npm run build && ts-node-dev src/index.ts",
+    "start:dev": "ts-node-dev src/index.ts",
     "start": "node dist/index.js",
     "test": "cross-env NODE_ENV=test DATABASE_URL=mysql://root:root@localhost:3306/ticket-test-db jest --watchAll --no-cache",
     "docker:dev": "nodemon --watch src -L --exec ts-node src/index.ts",
@@ -26,16 +27,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@amidsttickets/common": "^1.0.5",
+    "@amidsttickets/common": "^1.0.18",
     "@prisma/client": "^5.17.0",
     "axios": "^1.7.2",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "express-validator": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
-    "prisma": "^5.17.0"
+    "prisma": "^5.17.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/cookie-session": "^2.0.49",
