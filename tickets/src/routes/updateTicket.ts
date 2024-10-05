@@ -1,16 +1,18 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../utils/helpers";
 import {
   asyncWrapper,
   currentUser,
   errorHandler,
+  NotAuthorizedError,
   NotFoundError,
   requireAuth,
   validateInput,
 } from "@amidsttickets/common";
 import { newTicketSchema } from "../inputSchema";
+import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publisher";
+import { natsWrapper } from "../nats-wrapper";
 
-const prisma = new PrismaClient();
 const router = Router();
 
 router.put(
@@ -22,15 +24,42 @@ router.put(
     return asyncWrapper(async () => {
       const { ticketId } = req.params;
       const { title, price } = req.body;
+
       const ticket = await prisma.ticket.findUnique({
         where: { id: ticketId },
       });
 
-      if (!ticket)
+      if (!ticket) {
         return errorHandler({
           err: new NotFoundError("ticket does not exist"),
         });
-        
+      }
+
+      if (req.currentUser!.id !== ticket.userId) {
+        return errorHandler({
+          err: new NotAuthorizedError(
+            "you are not authorised to edit this card"
+          ),
+        });
+      }
+
+      await prisma.ticket.update({
+        where: {
+          id: ticketId,
+        },
+        data: {
+          title,
+          price,
+        },
+      });
+
+      await new TicketUpdatedPublisher(natsWrapper.client).publish({
+        title,
+        price,
+        userId: req.currentUser!.id,
+        id: ticketId,
+      });
+
       return res.status(200).send({ ticket });
     }, next);
   }

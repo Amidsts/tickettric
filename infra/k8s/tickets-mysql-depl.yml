@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: tickets-mysql-c
-          image: mysql
+          image: mysql:latest
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:

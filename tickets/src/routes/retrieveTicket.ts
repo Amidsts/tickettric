@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../utils/helpers";
 import {
   asyncWrapper,
   errorHandler,
@@ -8,7 +8,7 @@ import {
 } from "@amidsttickets/common";
 import { showTicketSchema } from "../inputSchema";
 
-const prisma = new PrismaClient();
+
 const router = Router();
 
 router.get(

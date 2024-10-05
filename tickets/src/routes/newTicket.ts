@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../utils/helpers";
 import {
   asyncWrapper,
   currentUser,
@@ -7,8 +7,9 @@ import {
   validateInput,
 } from "@amidsttickets/common";
 import { newTicketSchema } from "../inputSchema";
+import { TicketCreatedPublisher } from "../events/publishers/ticket-created-publishers";
+import { natsWrapper } from "../nats-wrapper";
 
-const prisma = new PrismaClient();
 const router = Router();
 
 router.post(
@@ -23,7 +24,13 @@ router.post(
         data: { title, price, userId: req.currentUser!.id },
       });
 
-      return res.status(200).send({ ticket });
+      await new TicketCreatedPublisher(natsWrapper.client).publish({
+        id: ticket.id,
+        userId: ticket.userId,
+        title: ticket.title,
+        price: ticket.price,
+      });
+      return res.status(200).send(ticket);
     }, next);
   }
 );

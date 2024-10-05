@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth-c
-          image: jewelcodes/auth
+          image: jewelcodes/auth:latest
           env:
             - name: JWT_KEY
               valueFrom:

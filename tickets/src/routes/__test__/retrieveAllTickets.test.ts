@@ -1,8 +1,6 @@
 import request from "supertest";
 import app from "../../app";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../../utils/helpers";
 
 it("can fetch the list of all tickets", async () => {
     const tickets = await prisma.ticket.createMany({

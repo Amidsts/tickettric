@@ -1,27 +1,31 @@
-import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
+import { prisma } from "../utils/helpers";
+import { randomBytes } from "node:crypto";
 
-const prisma = new PrismaClient();
+jest.mock("../nats-wrapper");
 
 beforeAll(async () => {
   if (process.env.NODE_ENV === "test") {
     console.log("TESTING............");
   }
   //connect to db
+  await prisma.$connect();
 });
 
 beforeEach(async () => {
+  jest.clearAllMocks()
   await prisma.ticket.deleteMany();
 });
 
 afterAll(async () => {
+  await prisma.ticket.deleteMany();
   await prisma.$disconnect();
 });
 
 (global as any).signin = () => {
   const payload = {
     email: "test@test.com",
-    id: "parssyward",
+    id: randomBytes(3).toString("hex"),
   };
 
   const token = jwt.sign(payload, process.env.JWT_KEY!);

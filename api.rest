@@ -1,5 +1,5 @@
-# @server= http://tickettric.dev
-@server=http://localhost:2000
+@server= http://tickettric.dev
+# @server=http://localhost:2000
 ### sign up
 POST {{server}}/api/users/signup
 Content-Type: application/json
@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ### sign up
-GET {{server}}/api/users/currentUser/cfgbhhgc
+GET {{server}}/api/users/currentUser
 
 ##### homepage
 GET {{server}}
@@ -23,3 +23,9 @@ Content-Type: application/json
     "title": "balalu",
     "price": "20"
 }
+
+######## Get ticket
+GET {{server}}/api/tickets/
+
+######## update ticket
+PUT {{server}}/api/tickets/

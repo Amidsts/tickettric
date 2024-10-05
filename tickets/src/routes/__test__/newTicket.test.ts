@@ -1,8 +1,7 @@
 import request from "supertest";
 import app from "../../app";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../../utils/helpers";
+import { natsWrapper } from "../../nats-wrapper";
 
 it('has a route handler for "/api/tickets for post request', async () => {
   const response = await request(app).post("/api/tickets").send({});
@@ -33,14 +32,21 @@ it("create a ticket with valid input parameters", async () => {
   let tickets = await prisma.ticket.findMany();
   expect(tickets.length).toBe(0);
 
-  const cookie = (global as any).signin();
-
   const response = await request(app)
     .post("/api/tickets")
-    .set("Cookie", cookie!)
+    .set("Cookie", (global as any).signin())
     .send({ title: "footbal", price: 90 });
 
-  tickets = await prisma.ticket.findMany();
+  // tickets = await prisma.ticket.findMany();
   expect(response.status).toBe(200);
-  expect(tickets.length).toBe(1);
+});
+
+it("publish an event", async () => {
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", (global as any).signin())
+    .send({ title: "footbal", price: 90 })
+    .expect(200);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client-c
-          image: jewelcodes/client
+          image: jewelcodes/client:latest
   
 ---
 apiVersion: v1
