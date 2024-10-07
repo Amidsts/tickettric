@@ -1,21 +1,20 @@
 import { NextFunction, Request, Response, Router } from "express";
-import {
-  asyncWrapper,
-  currentUser,
-  requireAuth,
-  validateInput,
-} from "@amidsttickets/common";
+import { asyncWrapper, currentUser, requireAuth } from "@amidsttickets/common";
+import OrderModel from "../models/orders.model";
 
 const router = Router();
 
 router.get(
   "/api/orders",
-  // validateInput(newTicketSchema),
-  // currentUser,
-  // requireAuth,
+  currentUser,
+  requireAuth,
   async (req: Request, res: Response, next: NextFunction) => {
     return asyncWrapper(async () => {
-      return res.status(200).send({});
+      const order = await OrderModel.find({
+        userId: req.currentUser?.id,
+      }).populate("ticket");
+
+      return res.status(200).send(order);
     }, next);
   }
 );

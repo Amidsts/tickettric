@@ -1,13 +1,20 @@
-import { NextFunction, Request, Response, Router } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import {
   asyncWrapper,
+  BadRequestError,
   currentUser,
+  errorHandler,
+  NotFoundError,
+  OrderStatus,
   requireAuth,
   validateInput,
 } from "@amidsttickets/common";
 import { newOrderSchema } from "../inputSchema";
+import TicketModel, { TicketDoc } from "../models/ticket.model";
+import OrderModel, { OrderDoc } from "../models/orders.model";
 
-const router = Router();
+const EXPIRATION_WINDOW_SECONDS = 60 * 15;
+const router = express.Router();
 
 router.post(
   "/api/orders",
@@ -15,8 +22,31 @@ router.post(
   currentUser,
   requireAuth,
   async (req: Request, res: Response, next: NextFunction) => {
+    const { ticketId } = req.body;
+
     return asyncWrapper(async () => {
-      return res.status(200).send({});
+      const ticket = await TicketModel.findById(ticketId);
+      if (!ticket)
+        return errorHandler({ err: new NotFoundError("Ticket does not exist") });
+
+      const isReservedTicket = await ticket!.isReserved();
+      if (isReservedTicket)
+        await errorHandler({
+          err: new BadRequestError("This ticket is already reserved"),
+        });
+
+      const expiration = new Date();
+      expiration.setSeconds(
+        expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS
+      );
+
+      const order = await new OrderModel({
+        userId: req.currentUser!.id,
+        ticket: ticket as TicketDoc,
+        expiresAt: expiration,
+      }).save();
+
+      return res.status(201).send(order);
     }, next);
   }
 );

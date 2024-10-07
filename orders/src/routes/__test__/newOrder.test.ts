@@ -1,0 +1,48 @@
+import request from "supertest";
+import mongoose from "mongoose";
+
+import app from "../../app";
+import { natsWrapper } from "../../nats-wrapper";
+import TicketModel from "../../models/ticket.model";
+import OrderModel from "../../models/orders.model";
+
+it("returns an error if ticket does not exist", async () => {
+  const ticketId = new mongoose.Types.ObjectId().toString();
+
+  await request(app)
+    .post("/api/orders")
+    .set("Cookie", (global as any).signin())
+    .send({ ticketId })
+    .expect(404);
+});
+
+it("returns an error if ticket is already reserved", async () => {
+  const ticket = await new TicketModel({
+    title: "comedy live",
+    price: 290,
+  }).save();
+  await new OrderModel({
+    ticket,
+    userId: "94sjbfhk",
+    expiresAt: new Date(),
+  }).save();
+
+  await request(app)
+    .post("/api/orders")
+    .set("Cookie", (global as any).signin())
+    .send({ ticketId: ticket.id })
+    .expect(400);
+});
+
+it("reserves a ticket (i.e create an order)", async () => {
+  const ticket = await new TicketModel({
+    title: "comedy live",
+    price: 290,
+  }).save();
+
+  await request(app)
+    .post("/api/orders")
+    .set("Cookie", (global as any).signin())
+    .send({ ticketId: ticket.id })
+    .expect(201);
+});

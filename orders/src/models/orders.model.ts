@@ -1,16 +1,17 @@
-import { Document, model, Schema } from "mongoose";
+import { Document, Model, model, Schema } from "mongoose";
 import { OrderStatus } from "@amidsttickets/common";
+import { TicketDoc } from "./ticket.model";
 
-export enum orderEnum {}
+export { OrderStatus };
 
-interface OrderAttr extends Document {
-  ticket: string;
+export interface OrderDoc extends Document {
+  ticket: TicketDoc;
   userId: string;
   status: OrderStatus;
   expiresAt: Date;
 }
 
-const orderSchema = new Schema<OrderAttr>(
+const orderSchema = new Schema<OrderDoc>(
   {
     userId: {
       type: String,
@@ -27,8 +28,9 @@ const orderSchema = new Schema<OrderAttr>(
       required: true,
     },
     ticket: {
-      type: String,
+      type: Schema.Types.ObjectId,
       required: true,
+      ref: "Ticket",
     },
   },
   {
@@ -42,5 +44,5 @@ const orderSchema = new Schema<OrderAttr>(
   }
 );
 
-const orderModel = model<OrderAttr>("order", orderSchema);
-export default orderModel;
+const OrderModel = model<OrderDoc>("Order", orderSchema);
+export default OrderModel;

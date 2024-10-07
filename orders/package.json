@@ -8,7 +8,7 @@
     "dev": "npm run build && ts-node-dev src/index.ts",
     "start:dev": "ts-node-dev src/index.ts",
     "start": "node dist/index.js",
-    "test": "cross-env NODE_ENV=test DATABASE_URL=mongodb://localhost:27017/order-test-db jest --watchAll --no-cache --runInBand",
+    "test": "jest --watchAll --no-cache --runInBand",
     "docker:dev": "nodemon --watch src -L --exec ts-node src/index.ts"
   },
   "jest": {
@@ -18,19 +18,19 @@
       "./src/test/setup.ts"
     ],
     "setupFiles": [
-      "dotenv/config"
+      "./src/test/jest.setup.ts"
     ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@amidsttickets/common": "^1.0.21",
+    "@amidsttickets/common": "^1.0.23",
     "axios": "^1.7.2",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^2.5.11",
+    "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.0",
     "node-nats-streaming": "^0.3.2",

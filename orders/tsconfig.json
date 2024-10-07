@@ -6,15 +6,13 @@
     "paths": {
       "*": ["node_modules/*", "src/types/*"]
     },
-    "typeRoots": [
-      "./node_modules/@types",
-      "./types"
-    ],
+    "typeRoots": ["./node_modules/@types", "./types"],
     "outDir": "dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true 
+    "skipLibCheck": true,
+    "moduleResolution": "node"
   },
   "include": ["src/**/*.ts", "src/types/*.d.ts"]
 }
