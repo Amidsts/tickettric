@@ -12,6 +12,7 @@ model ticket {
   title  String
   price Int
   userId String
+  orderId String?
   createdAt DateTime @default(now())
   updatedAT DateTime @updatedAt
 }

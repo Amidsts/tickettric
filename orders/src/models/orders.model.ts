@@ -28,7 +28,7 @@ const orderSchema = new Schema<OrderDoc>(
       required: true,
     },
     ticket: {
-      type: Schema.Types.ObjectId,
+      type: String,
       required: true,
       ref: "Ticket",
     },

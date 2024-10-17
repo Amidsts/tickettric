@@ -6,7 +6,11 @@ import { natsWrapper } from "../../nats-wrapper";
 import TicketModel from "../../models/ticket.model";
 
 const createTicket = async () => {
-  return await new TicketModel({ title: "concert", price: 90 }).save();
+  return await new TicketModel({
+    _id: "123456789",
+    title: "concert",
+    price: 90,
+  }).save();
 };
 
 it("trows an error for orders that does not exist", async () => {

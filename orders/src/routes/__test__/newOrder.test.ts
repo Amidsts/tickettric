@@ -18,6 +18,7 @@ it("returns an error if ticket does not exist", async () => {
 
 it("returns an error if ticket is already reserved", async () => {
   const ticket = await new TicketModel({
+    _id: "3784ff0d-4da9-462e-b115-4e0a1546a17e",
     title: "comedy live",
     price: 290,
   }).save();
@@ -27,15 +28,17 @@ it("returns an error if ticket is already reserved", async () => {
     expiresAt: new Date(),
   }).save();
 
-  await request(app)
+  const res = await request(app)
     .post("/api/orders")
     .set("Cookie", (global as any).signin())
     .send({ ticketId: ticket.id })
     .expect(400);
+  
 });
 
 it("reserves a ticket (i.e create an order)", async () => {
   const ticket = await new TicketModel({
+    _id: "3784ff0d-4da9-462e-b115-4e0a1546a19e",
     title: "comedy live",
     price: 290,
   }).save();
@@ -45,4 +48,20 @@ it("reserves a ticket (i.e create an order)", async () => {
     .set("Cookie", (global as any).signin())
     .send({ ticketId: ticket.id })
     .expect(201);
+});
+
+it("emits an order created event", async () => {
+  const ticket = await new TicketModel({
+    _id: "3784ff0d-4da9-462e-b115-4e0a1546a17e",
+    title: "comedy live",
+    price: 290,
+  }).save();
+
+  await request(app)
+    .post("/api/orders")
+    .set("Cookie", (global as any).signin())
+    .send({ ticketId: ticket.id })
+    .expect(201);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

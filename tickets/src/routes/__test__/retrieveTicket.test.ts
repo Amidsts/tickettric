@@ -2,7 +2,10 @@ import request from "supertest";
 import app from "../../app";
 
 it("should return 404 if the ticket is not found", async () => {
-  await request(app).get("/api/tickets/sjhdwkug").send().expect(404);
+  const res = await request(app).get("/api/tickets/sjhdwkug").send();
+  console.log(res.body);
+
+  expect(res.status).toBe(404);
 });
 
 it("returns the ticket if the ticket is found", async () => {

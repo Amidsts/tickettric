@@ -10,6 +10,8 @@ import {
   validateInput,
 } from "@amidsttickets/common";
 import OrderModel from "../models/orders.model";
+import { OrderCancelledPublisher } from "../events/publisers/order-cancelled-publisher";
+import { natsWrapper } from "../nats-wrapper";
 
 const router = Router();
 
@@ -35,6 +37,11 @@ router.delete(
         });
       order.status = OrderStatus.Canceled;
       await order.save();
+
+      await new OrderCancelledPublisher(natsWrapper.client).publish({
+        id: order.id,
+        ticket: { id: order.ticket.id },
+      });
 
       return res.status(204).send(order);
     }, next);

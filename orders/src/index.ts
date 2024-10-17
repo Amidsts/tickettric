@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 
 import app from "./app";
 import { natsWrapper } from "./nats-wrapper";
+import { TicketUpdatedLister } from "./events/listeners/ticket-updated-listener";
+import { TicketCreatedListener } from "./events/listeners/ticket-created-listener";
 
 const { JWT_KEY, NATS_URL, NATS_CLUSTER_ID, NATS_CLIENT_ID, DATABASE_URL } =
   process.env;
@@ -30,6 +32,9 @@ const start = async () => {
       console.log("connected to mongodb database");
 
       await natsWrapper.connect(NATS_CLUSTER_ID, NATS_CLIENT_ID, NATS_URL);
+
+      new TicketCreatedListener(natsWrapper.client).listen();
+      new TicketUpdatedLister(natsWrapper.client).listen();
     })
     .then(() => {
       app.listen(2000, () => {

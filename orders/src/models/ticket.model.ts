@@ -1,7 +1,9 @@
 import { Document, model, Schema } from "mongoose";
 import OrderModel, { OrderStatus } from "./orders.model";
+import { string } from "zod";
 
 export interface TicketDoc extends Document {
+  _id: string;
   title: string;
   price: number;
   isReserved(): Promise<boolean>;
@@ -9,6 +11,10 @@ export interface TicketDoc extends Document {
 
 const ticketSchema = new Schema<TicketDoc>(
   {
+    _id: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: true,

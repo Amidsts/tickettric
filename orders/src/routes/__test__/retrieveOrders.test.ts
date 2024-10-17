@@ -1,10 +1,17 @@
 import request from "supertest";
+import { v4 as uuidv4 } from "uuid";
 
 import app from "../../app";
 import TicketModel from "../../models/ticket.model";
 
+
+
 const createTicket = async () => {
-  return await new TicketModel({ title: "concert", price: 90 }).save();
+  return await new TicketModel({
+    _id: uuidv4(),
+    title: "concert",
+    price: 90,
+  }).save();
 };
 
 it("fetches all orders for a particular user", async () => {
