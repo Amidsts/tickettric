@@ -6,7 +6,7 @@ import appConfig from "./config/index";
 const { jwtKey, databaseUrl, port } = appConfig;
 
 const start = async () => {
-  console.log('starting up...');
+  console.log('starting up.....');
   
   if (!jwtKey) {
     throw Error("JWT_KEY must be defined!");
