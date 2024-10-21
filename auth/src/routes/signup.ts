@@ -1,26 +1,19 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
 import UserModel from "../models/user";
-import { BadRequestError, validateResult } from "@amidsttickets/common";
+import { BadRequestError, validateInput } from "@amidsttickets/common";
+import { signupSchema } from "../input-schema";
 
 const router = Router();
 
 router.post(
   "/api/users/signup",
-  [
-    body("email").isEmail().withMessage("Email must be valid"),
-    body("password")
-      .trim()
-      .isLength({ min: 4, max: 10 })
-      .withMessage("password must be between 4 & 10 char"),
-  ],
-  validateResult,
+  validateInput(signupSchema),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body;
-  
+
       const existingUser = await UserModel.findOne({ email });
       if (existingUser) {
         throw new BadRequestError("Email in use");
@@ -41,9 +34,8 @@ router.post(
       };
 
       res.status(201).send(user);
-      
     } catch (error: any) {
-      next(error)
+      next(error);
     }
   }
 );

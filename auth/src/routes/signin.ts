@@ -2,22 +2,16 @@ import { NextFunction, Request, Response, Router } from "express";
 import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
-import { validateResult, BadRequestError } from "@amidsttickets/common";
+import { BadRequestError, validateInput } from "@amidsttickets/common";
 import UserModel from "../models/user";
 import { Password } from "../services/password";
+import { signinSchema } from "../input-schema";
 
 const router = Router();
 
 router.post(
   "/api/users/signin",
-  [
-    body("email").isEmail().withMessage("Email must be valid"),
-    body("password")
-      .trim()
-      .isLength({ min: 4, max: 10 })
-      .withMessage("password must be between 4 & 10 char"),
-  ],
-  validateResult,
+  validateInput(signinSchema),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body;
@@ -39,7 +33,6 @@ router.post(
         throw Error("JWT_KEY must be defined");
       }
 
-
       const userjwt = jwt.sign(
         { id: existingUser._id, email: existingUser.email },
         process.env.JWT_KEY
@@ -50,9 +43,8 @@ router.post(
       };
 
       res.status(200).send(existingUser);
-
     } catch (error: any) {
-      next(error)
+      next(error);
     }
   }
 );

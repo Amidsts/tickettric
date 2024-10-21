@@ -11,7 +11,7 @@ it("fails, when an email that does not exist is supplied", async () => {
 it("fails for an incorrect password", async () => {
   await request(app)
     .post("/api/users/signup")
-    .send({ email: "ihsfhftd@email.com", password: "shbbaki" })
+    .send({ email: "ihsfhftd@email.com", password: "shbbakii" })
     .expect(201);
 
   await request(app)
@@ -23,12 +23,12 @@ it("fails for an incorrect password", async () => {
 it("respond with a cookie when given a valid credential", async () => {
   await request(app)
     .post("/api/users/signup")
-    .send({ email: "ihsfhftd@email.com", password: "shbbaki" })
+    .send({ email: "ihsfhftd@email.com", password: "shbbakii" })
     .expect(201);
 
   const response = await request(app)
     .post("/api/users/signin")
-    .send({ email: "ihsfhftd@email.com", password: "shbbaki" })
+    .send({ email: "ihsfhftd@email.com", password: "shbbakii" })
     .expect(200);
 
     expect(response.get('Set-Cookie')).toBeDefined()
