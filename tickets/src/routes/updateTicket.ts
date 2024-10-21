@@ -2,6 +2,7 @@ import { NextFunction, Request, Response, Router } from "express";
 import { prisma } from "../utils/helpers";
 import {
   asyncWrapper,
+  BadRequestError,
   currentUser,
   errorHandler,
   NotAuthorizedError,
@@ -34,6 +35,11 @@ router.put(
           err: new NotFoundError("ticket does not exist"),
         });
       }
+
+      if (ticket.orderId)
+        return errorHandler({
+          err: new BadRequestError("You cannot edit a reserved ticket!"),
+        });
 
       if (req.currentUser!.id !== ticket.userId) {
         return errorHandler({

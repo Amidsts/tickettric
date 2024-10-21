@@ -40,3 +40,19 @@ build:
         manual:
           - src:  'src/**/*.ts'
             dest: .
+    - image: jewelcodes/expiration
+      context: expiration
+      docker:
+        dockerfile: dockerfile
+      sync:
+        manual:
+          - src:  'src/**/*.ts'
+            dest: .
+    - image: jewelcodes/payments
+      context: payments
+      docker:
+        dockerfile: dockerfile
+      sync:
+        manual:
+          - src:  'src/**/*.ts'
+            dest: .

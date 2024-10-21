@@ -9,6 +9,7 @@
     "start:dev": "ts-node-dev src/index.ts",
     "start": "node dist/index.js",
     "test": "jest --watchAll --no-cache --runInBand",
+    "test:ci": "jest --runInBand",
     "docker:dev": "nodemon --watch src -L --exec ts-node src/index.ts"
   },
   "jest": {
@@ -25,7 +26,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@amidsttickets/common": "^1.0.24",
+    "@amidsttickets/common": "^1.0.28",
     "axios": "^1.7.2",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",

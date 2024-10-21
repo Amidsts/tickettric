@@ -9,7 +9,6 @@ import { queueGroupName } from "./queue-group-name";
 import { Message } from "node-nats-streaming";
 import { prisma } from "../../utils/helpers";
 import { TicketUpdatedPublisher } from "../../events/publishers/ticket-updated-publisher";
-import { natsWrapper } from "../../nats-wrapper";
 
 export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   subject: Subjects.OrderCreated = Subjects.OrderCreated;
@@ -22,12 +21,19 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
     if (!ticket)
       return errorHandler({ err: new NotAuthorizedError("ticket not found") });
 
-    await prisma.ticket.update({
+    const updatedTicket = await prisma.ticket.update({
       where: { id: data.ticket.id },
       data: { orderId: data.id },
     });
 
-    new TicketUpdatedPublisher(natsWrapper.client).publish()
+    await new TicketUpdatedPublisher(this.client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+      orderId: updatedTicket.orderId as string,
+    });
+
     msg.ack();
   }
 }

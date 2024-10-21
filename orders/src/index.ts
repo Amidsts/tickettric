@@ -3,8 +3,10 @@ import mongoose from "mongoose";
 
 import app from "./app";
 import { natsWrapper } from "./nats-wrapper";
-import { TicketUpdatedLister } from "./events/listeners/ticket-updated-listener";
+import { TicketUpdatedListener } from "./events/listeners/ticket-updated-listener";
 import { TicketCreatedListener } from "./events/listeners/ticket-created-listener";
+import { ExpirationCompleteListener } from "./events/listeners/expiration-complete-listener";
+import { PaymentCreatedListener } from "./events/listeners/payment-created-listener";
 
 const { JWT_KEY, NATS_URL, NATS_CLUSTER_ID, NATS_CLIENT_ID, DATABASE_URL } =
   process.env;
@@ -34,7 +36,9 @@ const start = async () => {
       await natsWrapper.connect(NATS_CLUSTER_ID, NATS_CLIENT_ID, NATS_URL);
 
       new TicketCreatedListener(natsWrapper.client).listen();
-      new TicketUpdatedLister(natsWrapper.client).listen();
+      new TicketUpdatedListener(natsWrapper.client).listen();
+      new ExpirationCompleteListener(natsWrapper.client).listen();
+      new PaymentCreatedListener(natsWrapper.client).listen();
     })
     .then(() => {
       app.listen(2000, () => {

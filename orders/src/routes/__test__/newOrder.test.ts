@@ -2,7 +2,7 @@ import request from "supertest";
 import mongoose from "mongoose";
 
 import app from "../../app";
-import { natsWrapper } from "../../nats-wrapper";
+import { natsWrapper } from "../../../../payments/src/nats-wrapper";
 import TicketModel from "../../models/ticket.model";
 import OrderModel from "../../models/orders.model";
 
@@ -33,7 +33,6 @@ it("returns an error if ticket is already reserved", async () => {
     .set("Cookie", (global as any).signin())
     .send({ ticketId: ticket.id })
     .expect(400);
-  
 });
 
 it("reserves a ticket (i.e create an order)", async () => {

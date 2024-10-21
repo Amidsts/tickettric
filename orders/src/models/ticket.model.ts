@@ -6,6 +6,7 @@ export interface TicketDoc extends Document {
   _id: string;
   title: string;
   price: number;
+  orderId?: string;
   isReserved(): Promise<boolean>;
 }
 
@@ -23,6 +24,7 @@ const ticketSchema = new Schema<TicketDoc>(
       type: Number,
       required: true,
     },
+    orderId: String,
   },
   {
     timestamps: true,

@@ -5,18 +5,16 @@ import {
   currentUser,
   errorHandler,
   NotFoundError,
-  OrderStatus,
   requireAuth,
   validateInput,
 } from "@amidsttickets/common";
 import { newOrderSchema } from "../inputSchema";
 import TicketModel, { TicketDoc } from "../models/ticket.model";
-import OrderModel, { OrderDoc } from "../models/orders.model";
+import OrderModel from "../models/orders.model";
 import { OrderCreatedPublisher } from "../events/publisers/ordercreated-publisher";
-import { Stan } from "node-nats-streaming";
 import { natsWrapper } from "../nats-wrapper";
 
-const EXPIRATION_WINDOW_SECONDS = 60 * 15;
+const EXPIRATION_WINDOW_SECONDS = 60 * 1;
 const router = express.Router();
 
 router.post(

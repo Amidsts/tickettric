@@ -27,3 +27,9 @@ kubectl exec -it <pod-name> -- <any command (e.g: pwd, ls, bash)>
 - get pod name of the nats-depl using <kubectl get pods>
 - port forward the nats pod using "kubectl port-forward <nats pod name> 4222:4222"
 - npm run <script name (e.g listen)>
+
+
+
+===================
+
+token: "tok_visa"

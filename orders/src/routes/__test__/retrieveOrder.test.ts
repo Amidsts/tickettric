@@ -2,7 +2,7 @@ import request from "supertest";
 import mongoose from "mongoose";
 
 import app from "../../app";
-import { natsWrapper } from "../../nats-wrapper";
+import { natsWrapper } from "../../../../payments/src/nats-wrapper";
 import TicketModel from "../../models/ticket.model";
 
 const createTicket = async () => {
@@ -49,7 +49,8 @@ it("fetches an order for a user", async () => {
     .send({ ticketId: ticket.id })
     .expect(201);
 
-   await request(app)
+  await request(app)
     .get(`/api/orders/${order.id}`)
-    .set("Cookie", user1).expect(200)
+    .set("Cookie", user1)
+    .expect(200);
 });

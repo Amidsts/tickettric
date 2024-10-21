@@ -1,6 +1,7 @@
 import request from "supertest";
 import app from "../../app";
 import { natsWrapper } from "../../nats-wrapper";
+import { prisma } from "../../utils/helpers";
 
 it("returns 404 if the provided ticket id does not exist", async () => {
   const ticketId = "f2c25072-c5a2-43cc-8c2c-38782265cd73";
@@ -79,4 +80,25 @@ it("publish an event", async () => {
     .expect(200);
 
   expect(natsWrapper.client.publish).toHaveBeenCalled();
+});
+
+it("reject update if ticket is reserved", async () => {
+  const cookie = (global as any).signin();
+
+  const response = await request(app)
+    .post("/api/tickets")
+    .set("Cookie", cookie!)
+    .send({ title: "footbal", price: 90 });
+
+  await prisma.ticket.update({
+    where: { id: response.body.id },
+    data: { orderId: "idjewiej" },
+  });
+
+  const res = await request(app)
+    .put(`/api/tickets/${response.body.id}`)
+    .set("Cookie", cookie)
+    .send({ title: "football", price: 900 });
+
+  expect(res.status).toBe(400);
 });

@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import app from "./app";
 import { natsWrapper } from "./nats-wrapper";
 import { prisma } from "./utils/helpers";
+import { OrderCancelledListener } from "./events/listeners/order-cancelled-listener";
+import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 
 const { JWT_KEY, NATS_URL, NATS_CLUSTER_ID, NATS_CLIENT_ID } = process.env;
 dotenv.config({ path: ".env.test" });
@@ -26,6 +28,8 @@ const start = async () => {
       console.log("connected to mysql database");
 
       await natsWrapper.connect(NATS_CLUSTER_ID, NATS_CLIENT_ID, NATS_URL);
+      new OrderCancelledListener(natsWrapper.client).listen();
+      new OrderCreatedListener(natsWrapper.client).listen();
     })
     .then(() => {
       app.listen(2000, () => {

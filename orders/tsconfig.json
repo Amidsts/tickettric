@@ -14,5 +14,9 @@
     "skipLibCheck": true,
     "moduleResolution": "node"
   },
-  "include": ["src/**/*.ts", "src/types/*.d.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/types/*.d.ts",
+    "../payments/src/nats-wrapper.ts"
+  ]
 }
