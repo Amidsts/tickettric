@@ -12,6 +12,8 @@ const { JWT_KEY, NATS_URL, NATS_CLUSTER_ID, NATS_CLIENT_ID, DATABASE_URL } =
   process.env;
 
 const start = async () => {
+  console.log("Starting Up...");
+
   if (!JWT_KEY) {
     throw Error("JWT_KEY must be defined");
   }
