@@ -47,7 +47,6 @@ router.post(
         amount: order.price * 100,
         source: token,
       });
-
       const payment = await new PaymentModel({
         orderId,
         stripeId: charge.id,

@@ -6,7 +6,7 @@ import { natsWrapper } from "./nats-wrapper";
 import { OrderCancelledListener } from "./events/listeners/order-cancelled-listener";
 import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 
-const { JWT_KEY, NATS_URL, NATS_CLUSTER_ID, NATS_CLIENT_ID, DATABASE_URL } =
+const { JWT_KEY, NATS_URL, NATS_CLUSTER_ID, NATS_CLIENT_ID, DATABASE_URL_PAYMENTS } =
   process.env;
 
 const start = async () => {
@@ -22,12 +22,12 @@ const start = async () => {
   if (!NATS_CLIENT_ID) {
     throw Error("NATS_CLIENT_ID must be defined");
   }
-  if (!DATABASE_URL) {
+  if (!DATABASE_URL_PAYMENTS) {
     throw Error("DATABASE_URL must be defined");
   }
 
   mongoose
-    .connect(DATABASE_URL!)
+    .connect(DATABASE_URL_PAYMENTS!)
     .then(async () => {
       console.log("connected to mongodb database");
 

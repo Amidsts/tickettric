@@ -4,8 +4,6 @@ import { v4 as uuidv4 } from "uuid";
 import app from "../../app";
 import TicketModel from "../../models/ticket.model";
 
-
-
 const createTicket = async () => {
   return await new TicketModel({
     _id: uuidv4(),

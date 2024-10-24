@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
-import { randomBytes } from "node:crypto";
 
 jest.mock("../nats-wrapper");
 

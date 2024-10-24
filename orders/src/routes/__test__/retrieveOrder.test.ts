@@ -2,7 +2,6 @@ import request from "supertest";
 import mongoose from "mongoose";
 
 import app from "../../app";
-import { natsWrapper } from "../../../../payments/src/nats-wrapper";
 import TicketModel from "../../models/ticket.model";
 
 const createTicket = async () => {

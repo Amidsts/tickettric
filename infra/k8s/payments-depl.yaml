@@ -26,7 +26,7 @@ spec:
                 secretKeyRef:
                   name: stripe-secret
                   key: STRIPE_KEY
-            - name: DATABASE_URL
+            - name: DATABASE_URL_PAYMENTS
               value: "mongodb://payments-mongo-srv:27017/payments"
             - name: NATS_URL
               value: "http://nats-srv:4222"

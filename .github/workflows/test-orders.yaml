@@ -1,11 +1,16 @@
 name: tests-orders
 
 on:
-  pull_request
+  pull_request:
+    paths:
+      - 'orders/**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL_ORDERS: ${{ secrets.DATABASE_URL}}
+      JWT_KEY: ${{ secrets.JWT_KEY}}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: cd orders && npm install && npm run test:ci

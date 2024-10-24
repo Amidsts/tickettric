@@ -10,11 +10,7 @@ it('has a route handler for "/api/tickets for post request', async () => {
 });
 
 it("returns an error for invalid title", async () => {
-  await request(app)
-    .post("/api/tickets")
-    .send({ price: "90" })
-    .expect(400);
-
+  await request(app).post("/api/tickets").send({ price: "90" }).expect(400);
 });
 
 it("returns an error for invalid price", async () => {
