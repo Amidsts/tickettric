@@ -5,6 +5,12 @@ on: pull_request
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_USER: root
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL}}
       JWT_KEY: ${{ secrets.JWT_KEY}}
