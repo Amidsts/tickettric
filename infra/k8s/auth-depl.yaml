@@ -21,11 +21,11 @@ spec:
                 secretKeyRef:
                   name: jwt-key
                   key: JWT_KEY
-            - name: DATABASE_URL
+            - name: DATABASE_URL_AUTH
               valueFrom:
                 secretKeyRef:
                   name: auth-db
-                  key: DATABASE_URL
+                  key: DATABASE_URL_AUTH
             - name: PORT
               valueFrom:
                 secretKeyRef:

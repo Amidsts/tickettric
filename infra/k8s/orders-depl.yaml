@@ -21,7 +21,7 @@ spec:
                 secretKeyRef:
                   name: jwt-key
                   key: JWT_KEY
-            - name: DATABASE_URL
+            - name: DATABASE_URL_ORDERS
               value: "mongodb://orders-mongo-srv:27017/orders"
             - name: NATS_URL
               value: "http://nats-srv:4222"

@@ -8,7 +8,7 @@ import { TicketCreatedListener } from "./events/listeners/ticket-created-listene
 import { ExpirationCompleteListener } from "./events/listeners/expiration-complete-listener";
 import { PaymentCreatedListener } from "./events/listeners/payment-created-listener";
 
-const { JWT_KEY, NATS_URL, NATS_CLUSTER_ID, NATS_CLIENT_ID, DATABASE_URL } =
+const { JWT_KEY, NATS_URL, NATS_CLUSTER_ID, NATS_CLIENT_ID, DATABASE_URL_ORDERS } =
   process.env;
 
 const start = async () => {
@@ -26,12 +26,12 @@ const start = async () => {
   if (!NATS_CLIENT_ID) {
     throw Error("NATS_CLIENT_ID must be defined");
   }
-  if (!DATABASE_URL) {
+  if (!DATABASE_URL_ORDERS) {
     throw Error("DATABASE_URL must be defined");
   }
 
   mongoose
-    .connect(DATABASE_URL!)
+    .connect(DATABASE_URL_ORDERS!)
     .then(async () => {
       console.log("connected to mongodb database");
 
