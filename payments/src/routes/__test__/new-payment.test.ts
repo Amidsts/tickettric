@@ -55,11 +55,12 @@ it("return a 201 with valid input", async () => {
     status: OrderStatus.Created,
   }).save();
 
-  await request(app)
+  const res = await request(app)
     .post("/api/payments")
     .set("Cookie", (global as any).signin(userId))
     .send({ token: "tok_visa", orderId: order.id })
     .expect(201);
+  // console.log(res.body);
 
   const chargeOptions = (stripe.charges.create as jest.Mock).mock.calls[0][0];
   expect(chargeOptions.source).toEqual("tok_visa");

@@ -1,11 +1,13 @@
 name: tests-tickets
 
-on:
-  pull_request
+on: pull_request
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL}}
+      JWT_KEY: ${{ secrets.JWT_KEY}}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: cd tickets && npm install && npm run test:ci

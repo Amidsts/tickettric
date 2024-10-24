@@ -33,3 +33,7 @@ kubectl exec -it <pod-name> -- <any command (e.g: pwd, ls, bash)>
 ===================
 
 token: "tok_visa"
+
+
+username==amidsts
+passwrd== ameedat

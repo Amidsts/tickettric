@@ -1,5 +1,5 @@
 import { TicketCreatedEvent } from "@amidsttickets/common";
-import { natsWrapper } from "../../../../../payments/src/nats-wrapper";
+import { natsWrapper } from "../../../nats-wrapper";
 import { TicketCreatedListener } from "../ticket-created-listener";
 import { Message } from "node-nats-streaming";
 import TicketModel from "../../../models/ticket.model";

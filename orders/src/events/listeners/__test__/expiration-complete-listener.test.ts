@@ -1,6 +1,6 @@
 import { ExpirationCompleteEvent, OrderStatus } from "@amidsttickets/common";
 import { ExpirationCompleteListener } from "../expiration-complete-listener";
-import { natsWrapper } from "../../../../../payments/src/nats-wrapper";
+import { natsWrapper } from "../../../nats-wrapper";
 import TicketModel from "../../../models/ticket.model";
 import OrderModel from "../../../models/orders.model";
 

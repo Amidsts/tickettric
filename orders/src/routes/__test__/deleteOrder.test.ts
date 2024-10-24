@@ -2,7 +2,7 @@ import request from "supertest";
 
 import app from "../../app";
 import TicketModel from "../../models/ticket.model";
-import { natsWrapper } from "../../../../payments/src/nats-wrapper";
+import { natsWrapper } from "../../nats-wrapper";
 
 const createTicket = async () => {
   return await new TicketModel({

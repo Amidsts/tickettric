@@ -1,7 +1,7 @@
 import { TicketUpdatedEvent } from "@amidsttickets/common";
 import { Message } from "node-nats-streaming";
 import { TicketUpdatedListener } from "../ticket-updated-listener";
-import { natsWrapper } from "../../../../../payments/src/nats-wrapper";
+import { natsWrapper } from "../../../nats-wrapper";
 import TicketModel from "../../../models/ticket.model";
 
 const setup = async () => {
