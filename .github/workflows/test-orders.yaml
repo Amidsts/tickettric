@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL}}
+      DATABASE_URL_ORDERS: ${{ secrets.DATABASE_URL}}
       JWT_KEY: ${{ secrets.JWT_KEY}}
     steps:
       - uses: actions/checkout@v4
