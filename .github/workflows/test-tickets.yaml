@@ -18,6 +18,12 @@ jobs:
       JWT_KEY: ${{ secrets.JWT_KEY}}
     steps:
       - uses: actions/checkout@v4
+      - name: Wait for MySQL to be ready
+        run: |
+          until mysqladmin ping -h localhost --user=root --password=root --silent; do
+            echo "Waiting for MySQL..."
+            sleep 5
+          done
       - name: Create Database
         run: |
           mysql -h mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS \`ticket-db\`;"
