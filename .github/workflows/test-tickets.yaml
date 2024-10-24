@@ -18,4 +18,7 @@ jobs:
       JWT_KEY: ${{ secrets.JWT_KEY}}
     steps:
       - uses: actions/checkout@v4
+      - name: Create Database
+        run: |
+          mysql -h mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS \`ticket-db\`;"
       - run: cd tickets && npm install && npm run test:ci
